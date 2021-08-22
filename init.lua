@@ -11,34 +11,34 @@ castle_lighting = {}
 
 dofile(MP.."/brasier.lua")
 
-minetest.register_node("castle_lighting:light",{
+minetest.register_node("hades_castle_lighting:light",{
 	drawtype = "glasslike",
 	description = S("Light Block"),
 	sunlight_propagates = true,
 	light_source = 14,
 	tiles = {"castle_street_light.png"},
 	groups = {cracky=2},
-	sounds = default.node_sound_glass_defaults(),
+	sounds = hades_sounds.node_sound_glass_defaults(),
 	paramtype = "light",
 })
 
 minetest.register_craft({
-	output = "castle_lighting:light",
+	output = "hades_castle_lighting:light",
 	recipe = {
-		{"default:stick", "default:glass", "default:stick"},
-		{"default:glass", "default:torch", "default:glass"},
-		{"default:stick", "default:glass", "default:stick"},
+		{"hades_core:stick", "hades_core:glass", "hades_core:stick"},
+		{"hades_core:glass", "hades_torches:torch", "hades_core:glass"},
+		{"hades_core:stick", "hades_core:glass", "hades_core:stick"},
 	}
 })
 
-minetest.register_node( "castle_lighting:chandelier", {
+minetest.register_node("hades_castle_lighting:chandelier", {
 	drawtype = "plantlike",
 	description = S("Chandelier"),
 	paramtype = "light",
 	wield_image = "castle_chandelier_wield.png",
 	inventory_image = "castle_chandelier_wield.png", 
 	groups = {cracky=2},
-	sounds = default.node_sound_glass_defaults(),
+	sounds = hades_sounds.node_sound_glass_defaults(),
 	sunlight_propagates = true,
 	light_source = 14,
 	tiles = {
@@ -62,22 +62,22 @@ minetest.register_node( "castle_lighting:chandelier", {
 })
 
 minetest.register_craft({
-	output = "castle_lighting:chandelier",
+	output = "hades_castle_lighting:chandelier",
 	recipe = {
 		{"", "", ""},
-		{"", "default:steel_ingot", ""},
-		{"default:torch","default:torch","default:torch"},
+		{"", "hades_core:steel_ingot", ""},
+		{"hades_torches:torch","hades_torches:torch","hades_torches:torch"},
 	}
 })
 
-minetest.register_node( "castle_lighting:chandelier_chain", {
+minetest.register_node("hades_castle_lighting:chandelier_chain", {
 	drawtype = "plantlike",
 	description = S("Chandelier Chain"),
 	paramtype = "light",
 	wield_image = "castle_chandelier_chain.png",
 	inventory_image = "castle_chandelier_chain.png", 
 	groups = {cracky=2},
-	sounds = default.node_sound_glass_defaults(),
+	sounds = hades_sounds.node_sound_glass_defaults(),
 	sunlight_propagates = true,
 	tiles = {"castle_chandelier_chain.png"},
 	selection_box = {
@@ -90,10 +90,10 @@ minetest.register_node( "castle_lighting:chandelier_chain", {
 })
 
 minetest.register_craft({
-	output = "castle_lighting:chandelier_chain 4",
+	output = "hades_castle_lighting:chandelier_chain 4",
 	recipe = {
-		{"", "default:steel_ingot", ""},
+		{"", "hades_core:steel_ingot", ""},
 		{"", "", ""},
-		{"","default:steel_ingot",""},
+		{"","hades_core:steel_ingot",""},
 	}
 })

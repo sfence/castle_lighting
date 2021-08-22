@@ -1,4 +1,5 @@
-if not minetest.get_modpath("fire") then return end
+if not minetest.get_modpath("hades_fire") then return end
+if not minetest.get_modpath("hades_default") then return end
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -35,23 +36,23 @@ local brasier_burn = function(pos)
 	local node_above = minetest.get_node(pos_above)
 	local timer = minetest.get_node_timer(pos)
 	
-	if timer:is_started() and node_above.name == "fire:permanent_flame" then return end -- already burning, don't burn a new thing.
+	if timer:is_started() and node_above.name == "hades_fire:permanent_flame" then return end -- already burning, don't burn a new thing.
 	
 	local inv = minetest.get_inventory({type="node", pos=pos})
 	local item = inv:get_stack("fuel", 1)
 	local fuel_burned = minetest.get_craft_result({method="fuel", width=1, items={item:peek_item(1)}}).time
 	
-	if fuel_burned > 0 and (node_above.name == "air" or node_above.name == "fire:permanent_flame") then
+	if fuel_burned > 0 and (node_above.name == "air" or node_above.name == "hades_fire:permanent_flame") then
 		item:set_count(item:get_count() - 1)
 		inv:set_stack("fuel", 1, item)
 
 		timer:start(fuel_burned * 60) -- one minute of flame per second of burn time, for balance.
 		
 		if node_above.name == "air" then
-			minetest.set_node(pos_above, {name = "fire:permanent_flame"})
+			minetest.set_node(pos_above, {name = "hades_fire:permanent_flame"})
 		end
 	else
-		if node_above.name == "fire:permanent_flame" then
+		if node_above.name == "hades_fire:permanent_flame" then
 			minetest.set_node(pos_above, {name = "air"})
 		end
 	end
@@ -79,7 +80,7 @@ end
 local brasier_on_destruct = function(pos, oldnode)
 	local pos_above = {x=pos.x, y=pos.y+1, z=pos.z}
 	local node_above = minetest.get_node(pos_above)
-	if node_above.name == "fire:permanent_flame" then
+	if node_above.name == "hades_fire:permanent_flame" then
 		minetest.set_node(pos_above, {name = "air"})
 	end
 end
@@ -101,7 +102,7 @@ local brasier_allow_metadata_inventory_put = function(pos, listname, index, stac
 	return 0
 end
 
-minetest.register_node("castle_lighting:brasier_floor", {
+minetest.register_node("hades_castle_lighting:brasier_floor", {
 	description = S("Floor Brasier"),
 	_doc_items_longdesc = brasier_longdesc,
 	_doc_items_usagehelp = brasier_usagehelp,
@@ -129,18 +130,18 @@ minetest.register_node("castle_lighting:brasier_floor", {
 
 
 minetest.register_craft({
-	output = "castle_lighting:brasier_floor",
+	output = "hades_castle_lighting:brasier_floor",
 	recipe = {
-		{"default:steel_ingot", "default:torch", "default:steel_ingot"},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"hades_core:steel_ingot", "hades_torches:torch", "hades_core:steel_ingot"},
+		{"hades_core:steel_ingot", "hades_core:steel_ingot", "hades_core:steel_ingot"},
 	}
 })
 
 if minetest.get_modpath("hopper") and hopper ~= nil and hopper.add_container ~= nil then
 	hopper:add_container({
-		{"top", "castle_lighting:brasier_floor", "fuel"},
-		{"bottom", "castle_lighting:brasier_floor", "fuel"},
-		{"side", "castle_lighting:brasier_floor", "fuel"},
+		{"top", "hades_castle_lighting:brasier_floor", "fuel"},
+		{"bottom", "hades_castle_lighting:brasier_floor", "fuel"},
+		{"side", "hades_castle_lighting:brasier_floor", "fuel"},
 	})
 end
 
@@ -148,10 +149,10 @@ end
 -- Masonry brasiers
 
 local materials
-if minetest.get_modpath("castle_masonry") then
+if minetest.get_modpath("hades_castle_masonry") then
 	materials = castle_masonry.materials
 else
-	materials = {{name="stonebrick", desc=S("Stonebrick"), tile="default_stone_brick.png", craft_material="default:stonebrick"}}
+	materials = {{name="stonebrick", desc=S("Stonebrick"), tile="default_stone_brick.png", craft_material="hades_core:stonebrick"}}
 end
 
 local get_material_properties = function(material)
@@ -246,7 +247,7 @@ castle_lighting.register_pillar_brasier = function(material)
 	minetest.register_craft({
 	output = mod_name..":"..material.name.."_pillar_brasier 5",
 	recipe = {
-		{material.craft_material,"default:torch",material.craft_material},
+		{material.craft_material,"hades_torches:torch",material.craft_material},
 		{material.craft_material,material.craft_material,material.craft_material},
 		},
 	})
