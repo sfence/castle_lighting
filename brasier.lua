@@ -64,13 +64,13 @@ local brasier_on_construct = function(pos)
 	
 	local meta = minetest.get_meta(pos)
 	meta:set_string("formspec", 
-		"size[8,5.3]" ..
+		"size[10,5.3]" ..
 		default.gui_bg ..
 		default.gui_bg_img ..
 		default.gui_slots ..
 		"list[current_name;fuel;3.5,0;1,1;]" ..
-		"list[current_player;main;0,1.15;8,1;]" ..
-		"list[current_player;main;0,2.38;8,3;8]" ..
+		"list[current_player;main;0,1.15;10,1;]" ..
+		"list[current_player;main;0,2.38;10,3;10]" ..
 		"listring[current_name;main]" ..
 		"listring[current_player;main]" ..
 		default.get_hotbar_bg(0,1.15)
